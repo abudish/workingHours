@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Working Hours per week in countries</title>
+  <title>Working Hours per week in different countries, years 1985 - 2007</title>
   <meta charset="utf-8">
-  <meta name="description" content="Working Hours per week in countries">
+  <meta name="description" content="Working Hours per week in different countries, years 1985 - 2007">
   <meta name="author" content="Andrey Budish">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -32,9 +32,9 @@
     <!-- LOGO SLIDE -->
         <slide class="title-slide segue nobackground">
   <hgroup class="auto-fadein">
-    <h1>Working Hours per week in countries</h1>
-    <h2></h2>
-    <p>Andrey Budish<br/></p>
+    <h1>Working Hours per week in different countries, years 1985 - 2007</h1>
+    <h2>Developing Data Products course project (Coursera)</h2>
+    <p>Andrey Budish<br/>30th of April, 2017</p>
   </hgroup>
   <article></article>  
 </slide>
@@ -43,25 +43,75 @@
     <!-- SLIDES -->
     <slide class="" id="slide-1" style="background:;">
   <hgroup>
-    <h2>Read-And-Delete</h2>
+    <h2>Project Description</h2>
   </hgroup>
   <article data-timings="">
-    <ol>
-<li>Edit YAML front matter</li>
-<li>Write using R Markdown</li>
-<li>Use an empty line followed by three dashes to separate slides!</li>
-</ol>
+    <ul>
+<li><p>The main goal of this project was to create Shiny application and provide a reproducible pitch for it in a form of Slidify presentation.  </p></li>
+<li><p>I have decided to use open data from <a href="https://www.gapminder.org/data/">gapminder</a>, specifically <a href="https://docs.google.com/spreadsheets/d/1WPjCgWnDnRY_3wdW9_5KuIDHS-Lz1fML8Dcn0QNGiSs/pub">working hours per week data set</a> provided by International Labor organization.  </p></li>
+<li><p>The idea behind the app is to compare two countries by working hours per week during a specific time period.  </p></li>
+<li><p>The app itself is available <a href="https://andrey-budish.shinyapps.io/workinghours/">here</a>  </p></li>
+<li><p>All source files, Shiny app related code and this presentation, are available at <a href="https://github.com/abudish/workingHours">https://github.com/abudish/workingHours</a></p></li>
+</ul>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="class" id="id" style="background:;">
+<slide class="" id="slide-2" style="background:;">
   <hgroup>
-    <h2>Slide 1</h2>
+    <h2>The Working Hours per Week App</h2>
   </hgroup>
   <article data-timings="">
-    <h2>text</h2>
+    <ul>
+<li><p>This app allows you to see how working hours per week has changed for one country and compare it to another country for the same time period</p></li>
+<li><p>To use the app one should choose two countries from available listboxes.  </p></li>
+<li><p>Then choose a range of years (available range is 1985-2007)</p></li>
+<li><p>The results are displayed in 3 tabs:</p>
+
+<ol class = "build incremental">
+<li>Tab &#39;Plot&#39;: displayes time series plot for the selected countries and period</li>
+<li>Tab &#39;Selected data&#39;: selected data in a form of a data table with variables country, year and hours_per_week</li>
+<li>Tab &#39;t-Test&#39;: shows  the result of Welch Two Sample t-test that checks if there is a difference between hours_per_week variable for the selected countries and period.</li>
+</ol></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Data set</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Original data set is not &#39;tidy&#39;, so it needs to be transformed in the way that each row is a unique observation. Transformed data set contains 3 variables: country, year and hour_per_week. Total number of unique countries is 25, year range is from 1985 to 2007, number of observations is 575.</p>
+
+<pre><code class="r">library(reshape2); library(readxl)
+df &lt;- read_xlsx(&quot;Working hours per week (1985 - 2007).xlsx&quot;)
+df &lt;- melt(df, id=&quot;Working hours per week&quot;)
+colnames(df) &lt;- c(&quot;country&quot;, &quot;year&quot;, &quot;hours_per_week&quot;)
+head(df, 3)
+</code></pre>
+
+<pre><code>##     country year hours_per_week
+## 1 Australia 1985       34.33846
+## 2   Austria 1985             NA
+## 3   Belgium 1985       34.59615
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>Plot example</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Below are the output plot, if user&#39;s input was: range - from 1991 to 2000, countries - Australia and Canada. </p>
+
+<p><img src="assets/fig/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" style="display: block; margin: auto;" /></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -73,14 +123,26 @@
     <ul>
       <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=1 title='Read-And-Delete'>
+        data-slide=1 title='Project Description'>
          1
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=2 title='Slide 1'>
+        data-slide=2 title='The Working Hours per Week App'>
          2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Data set'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Plot example'>
+         4
       </a>
     </li>
   </ul>
